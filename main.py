@@ -1,6 +1,16 @@
 import random
 import pygame
 import time
+import os
+import sys
+
+
+def resource_path(filename):
+    """Return the path to a bundled asset in both source and PyInstaller runs."""
+    base_path = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, filename)
+
+
 pygame.init()
 class TextBox:
     def __init__(self, x, y, width, height, placeholder="Type here...", max_length=100):
@@ -31,14 +41,14 @@ class TextBox:
     def get(self):
         return self.text
 screen = pygame.display.set_mode((1000, 600))
-icon = pygame.image.load("logo.png")
+icon = pygame.image.load(resource_path("logo.png"))
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Haunted House")
 running = True
 lives = 5
-heart = pygame.image.load("heart.png")
+heart = pygame.image.load(resource_path("heart.png"))
 heart = pygame.transform.scale(heart, (30, 30))
-golden_heart = pygame.image.load("golden_heart.png")
+golden_heart = pygame.image.load(resource_path("golden_heart.png"))
 golden_heart = pygame.transform.scale(golden_heart, (30, 30))
 button1 = pygame.Rect(40, 520, 280, 60)
 button2 = pygame.Rect(360, 520, 280, 60)
@@ -48,7 +58,7 @@ currentChoiceRunning = True
 output = pygame.font.SysFont("Arial", 30).render("You can either enter the house, sneak in from the back, or run away from it.", True, (255, 255, 255))
 while currentChoiceRunning:
     title = pygame.font.SysFont("Arial", 30).render("You see a haunted house in the distance. What do you do?", True, (255, 255, 255))
-    house_image = pygame.image.load("house.png")
+    house_image = pygame.image.load(resource_path("house.png"))
     house_image = pygame.transform.scale(house_image, (800, 300))
     button1_color = (85, 32, 48)
     button2_color = (85, 32, 48)
@@ -98,10 +108,10 @@ while currentChoiceRunning:
     pygame.display.flip()
 if nextChoice == 2 and lives > 0:
     currentChoiceRunning = True
-    output = pygame.font.SysFont("Arial", 30).render("You can either enter the house, sneak in from the back, or run away from it.", True, (255, 255, 255))
+    output = pygame.font.SysFont("Arial", 30).render("You can either attack spider, leave peacefully, or flip a coin.", True, (255, 255, 255))
     while currentChoiceRunning:
         title = pygame.font.SysFont("Arial", 30).render("You see a sleeping spider. What do you do?", True, (255, 255, 255))
-        sleeping_spider_image = pygame.image.load("sleeping_spider.png")
+        sleeping_spider_image = pygame.image.load(resource_path("sleeping_spider.png"))
         sleeping_spider_image = pygame.transform.scale(sleeping_spider_image, (400, 300))
         button1_color = (85, 32, 48)
         button2_color = (85, 32, 48)
@@ -162,10 +172,10 @@ if nextChoice == 2 and lives > 0:
         pygame.display.flip()
     if nextChoice == 1 and lives > 0:
         currentChoiceRunning = True
-        output = pygame.font.SysFont("Arial", 30).render("You can either enter the house, sneak in from the back, or run away from it.", True, (255, 255, 255))
+        output = pygame.font.SysFont("Arial", 30).render("You can either attack the head, back, or flip a coin.", True, (255, 255, 255))
         while currentChoiceRunning:
             title = pygame.font.SysFont("Arial", 30).render("You see a sleeping spider. What do you do?", True, (255, 255, 255))
-            sleeping_spider_image = pygame.image.load("sleeping_spider.png")
+            sleeping_spider_image = pygame.image.load(resource_path("sleeping_spider.png"))
             sleeping_spider_image = pygame.transform.scale(sleeping_spider_image, (400, 300))
             button1_color = (85, 32, 48)
             button2_color = (85, 32, 48)
@@ -228,7 +238,7 @@ user_name = "Player"
 if lives > 0:
     currentChoiceRunning = True
     output = pygame.font.SysFont("Arial", 30).render("Tell The Ghost Your Name", True, (255, 255, 255))
-    ghost_image_in_house = pygame.image.load("ghost_in_house.png")
+    ghost_image_in_house = pygame.image.load(resource_path("ghost_in_house.png"))
     ghost_image_in_house = pygame.transform.scale(ghost_image_in_house, (400, 300))
     name_box = TextBox(50, 500, 300, 40, "Enter your name...")
     while currentChoiceRunning:
@@ -269,7 +279,7 @@ if lives > 0:
     output = pygame.font.SysFont("Arial", 30).render("Make your choice.", True, (255, 255, 255))
     while currentChoiceRunning:
         title = pygame.font.SysFont("Arial", 30).render(f"\"Would You Like To Play A Game {user_name}?\" The Ghost Asks.", True, (255, 255, 255))
-        house_image = pygame.image.load("house.png")
+        house_image = pygame.image.load(resource_path("house.png"))
         house_image = pygame.transform.scale(house_image, (800, 300))
         button1_color = (85, 32, 48)
         button2_color = (85, 32, 48)
@@ -326,7 +336,7 @@ if nextChoice == 1 and lives > 0:
         output = pygame.font.SysFont("Arial", 30).render("Choose 1 or 2", True, (255, 255, 255))
         while currentChoiceRunning:
             title = pygame.font.SysFont("Arial", 30).render("Pick A Potion", True, (255, 255, 255))
-            potion_1 = pygame.image.load("awkward_potion.png")
+            potion_1 = pygame.image.load(resource_path("awkward_potion.png"))
             potion_1 = pygame.transform.scale(potion_1, (100, 100))
             potion_2 = potion_1.copy()
             button1_color = (85, 32, 48)
@@ -343,8 +353,8 @@ if nextChoice == 1 and lives > 0:
             pygame.draw.rect(screen, button1_color, button1)
             pygame.draw.rect(screen, button2_color, button2)
             pygame.draw.rect(screen, button3_color, button3)
-            screen.blit(potion_1, (button1.centerx - 50, button1.y - 160))
-            screen.blit(potion_2, (button2.centerx - 50, button2.y - 160))
+            screen.blit(potion_1, (button1.centerx - 50, button1.y - 180))
+            screen.blit(potion_2, (button2.centerx - 50, button2.y - 180))
             screen.blit(button1_text, (button1.x + 10, button1.y + 10))
             screen.blit(button2_text, (button2.x + 10, button2.y + 10))
             screen.blit(button3_text, (button3.x + 10, button3.y + 10))
@@ -369,8 +379,8 @@ if nextChoice == 1 and lives > 0:
                             potion_2.fill((80, 255, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
                             output = pygame.font.SysFont("Arial", 30).render("You chose the harming potion.", True, (255, 255, 255))
                             lives -= 1
-                        screen.blit(potion_1, (button1.centerx - 50, button1.y - 160))
-                        screen.blit(potion_2, (button2.centerx - 50, button2.y - 160))
+                        screen.blit(potion_1, (button1.centerx - 50, button1.y - 180))
+                        screen.blit(potion_2, (button2.centerx - 50, button2.y - 180))
                         screen.blit(output, (50, 450))
                         pygame.display.flip()
                         time.sleep(1)
@@ -386,8 +396,8 @@ if nextChoice == 1 and lives > 0:
                             potion_2.fill((80, 255, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
                             output = pygame.font.SysFont("Arial", 30).render("You chose the healing potion.", True, (255, 255, 255))
                             lives += 1
-                        screen.blit(potion_1, (button1.centerx - 50, button1.y - 160))
-                        screen.blit(potion_2, (button2.centerx - 50, button2.y - 160))
+                        screen.blit(potion_1, (button1.centerx - 50, button1.y - 180))
+                        screen.blit(potion_2, (button2.centerx - 50, button2.y - 180))
                         screen.blit(output, (50, 450))
                         pygame.display.flip()
                         time.sleep(1)
@@ -414,7 +424,7 @@ def riddle(question, correct_answer, wrong_answer, image_filename):
     output = pygame.font.SysFont("Arial", 30).render("Pick Answer", True, (255, 255, 255))
     answers = [(correct_answer, True), (wrong_answer, False)]
     random.shuffle(answers)
-    image = pygame.image.load(image_filename)
+    image = pygame.image.load(resource_path(image_filename))
     image = pygame.transform.scale(image, (800, 300))
     while currentChoiceRunning:
         title = pygame.font.SysFont("Arial", 30).render(question, True, (255, 255, 255))
@@ -607,3 +617,5 @@ elif lives > 0:
                 raise SystemExit
         pygame.display.flip()
 pygame.quit()
+
+
