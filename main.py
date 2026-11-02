@@ -5,12 +5,6 @@ import os
 import sys
 
 
-def resource_path(filename):
-    """Return the path to a bundled asset in both source and PyInstaller runs."""
-    base_path = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(base_path, filename)
-
-
 pygame.init()
 class TextBox:
     def __init__(self, x, y, width, height, placeholder="Type here...", max_length=100):
