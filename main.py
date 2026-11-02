@@ -3,9 +3,6 @@ import pygame
 import time
 import os
 import sys
-
-
-pygame.init()
 class TextBox:
     def __init__(self, x, y, width, height, placeholder="Type here...", max_length=100):
         self.rect = pygame.Rect(x, y, width, height)
@@ -39,7 +36,6 @@ icon = pygame.image.load(resource_path("logo.png"))
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Haunted House")
 running = True
-lives = 5
 heart = pygame.image.load(resource_path("heart.png"))
 heart = pygame.transform.scale(heart, (30, 30))
 golden_heart = pygame.image.load(resource_path("golden_heart.png"))
@@ -47,361 +43,6 @@ golden_heart = pygame.transform.scale(golden_heart, (30, 30))
 button1 = pygame.Rect(40, 520, 280, 60)
 button2 = pygame.Rect(360, 520, 280, 60)
 button3 = pygame.Rect(680, 520, 280, 60)
-nextChoice = ""
-currentChoiceRunning = True
-output = pygame.font.SysFont("Arial", 30).render("You can either enter the house, sneak in from the back, or run away from it.", True, (255, 255, 255))
-while currentChoiceRunning:
-    title = pygame.font.SysFont("Arial", 30).render("You see a haunted house in the distance. What do you do?", True, (255, 255, 255))
-    house_image = pygame.image.load(resource_path("house.png"))
-    house_image = pygame.transform.scale(house_image, (800, 300))
-    button1_color = (85, 32, 48)
-    button2_color = (85, 32, 48)
-    button3_color = (85, 32, 48)
-    button1_text = pygame.font.SysFont("Arial", 30).render("Enter House", True, (255, 255, 255))
-    button2_text = pygame.font.SysFont("Arial", 30).render("Sneak In From Back", True, (255, 255, 255))
-    button3_text = pygame.font.SysFont("Arial", 30).render("RUN AWAY FROM IT", True, (255, 255, 255))
-    screen.fill((22, 16, 32))
-    for i in range(lives):
-        screen.blit(heart, (950 - (10 + i * 40), 10))
-    pygame.draw.rect(screen, button1_color, button1)
-    pygame.draw.rect(screen, button2_color, button2)
-    pygame.draw.rect(screen, button3_color, button3)
-    screen.blit(button1_text, (button1.x + 10, button1.y + 10))
-    screen.blit(button2_text, (button2.x + 10, button2.y + 10))
-    screen.blit(button3_text, (button3.x + 10, button3.y + 10))
-    screen.blit(title, (50, 20))
-    screen.blit(house_image, (100, 100))
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            currentChoiceRunning = False
-            running = False
-            pygame.quit()
-            raise SystemExit
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            mouse_pos = event.pos
-            if button1.collidepoint(mouse_pos):
-                currentChoiceRunning = False
-                output = pygame.font.SysFont("Arial", 30).render("You enter the gate.", True, (255, 255, 255))
-                screen.blit(output, (50, 450))
-                pygame.display.flip()
-                time.sleep(1)
-                nextChoice = 1
-            elif button2.collidepoint(mouse_pos):
-                currentChoiceRunning = False
-                output = pygame.font.SysFont("Arial", 30).render("You sneak In.", True, (255, 255, 255))
-                screen.blit(output, (50, 450))
-                pygame.display.flip()
-                time.sleep(1)
-                nextChoice = 2
-            elif button3.collidepoint(mouse_pos):
-                output = pygame.font.SysFont("Arial", 30).render("Well... Nope", True, (255, 255, 255))
-                screen.blit(output, (50, 450))
-                pygame.display.flip()
-                time.sleep(0.2)
-    screen.blit(output, (50, 450))
-    pygame.display.flip()
-if nextChoice == 2 and lives > 0:
-    currentChoiceRunning = True
-    output = pygame.font.SysFont("Arial", 30).render("You can either attack spider, leave peacefully, or flip a coin.", True, (255, 255, 255))
-    while currentChoiceRunning:
-        title = pygame.font.SysFont("Arial", 30).render("You see a sleeping spider. What do you do?", True, (255, 255, 255))
-        sleeping_spider_image = pygame.image.load(resource_path("sleeping_spider.png"))
-        sleeping_spider_image = pygame.transform.scale(sleeping_spider_image, (400, 300))
-        button1_color = (85, 32, 48)
-        button2_color = (85, 32, 48)
-        button3_color = (85, 32, 48)
-        button1_text = pygame.font.SysFont("Arial", 30).render("Attack Spider", True, (255, 255, 255))
-        button2_text = pygame.font.SysFont("Arial", 30).render("Leave Peacefully", True, (255, 255, 255))
-        button3_text = pygame.font.SysFont("Arial", 30).render("Flip A Coin", True, (255, 255, 255))
-        screen.fill((22, 16, 32))
-        for i in range(lives):
-            screen.blit(heart, (950 - (10 + i * 40), 10))
-        pygame.draw.rect(screen, button1_color, button1)
-        pygame.draw.rect(screen, button2_color, button2)
-        pygame.draw.rect(screen, button3_color, button3)
-        screen.blit(button1_text, (button1.x + 10, button1.y + 10))
-        screen.blit(button2_text, (button2.x + 10, button2.y + 10))
-        screen.blit(button3_text, (button3.x + 10, button3.y + 10))
-        screen.blit(title, (50, 20))
-        screen.blit(sleeping_spider_image, (100, 100))
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                currentChoiceRunning = False
-                running = False
-                pygame.quit()
-                raise SystemExit
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                mouse_pos = event.pos
-                if button1.collidepoint(mouse_pos):
-                    currentChoiceRunning = False
-                    output = pygame.font.SysFont("Arial", 30).render("You prepare to fight the spider.", True, (255, 255, 255))
-                    screen.blit(output, (50, 450))
-                    pygame.display.flip()
-                    time.sleep(1)
-                    nextChoice = 1
-                elif button2.collidepoint(mouse_pos):
-                    currentChoiceRunning = False
-                    output = pygame.font.SysFont("Arial", 30).render("You leave peacefully.", True, (255, 255, 255))
-                    screen.blit(output, (50, 450))
-                    pygame.display.flip()
-                    time.sleep(1)
-                    nextChoice = 2
-                elif button3.collidepoint(mouse_pos):
-                    decision = random.randint(1, 2)
-                    if decision == 1:
-                        currentChoiceRunning = False
-                        output = pygame.font.SysFont("Arial", 30).render("You flip a coin and it lands on heads. You leave peacefully.", True, (255, 255, 255))
-                        screen.blit(output, (50, 450))
-                        pygame.display.flip()
-                        time.sleep(1)
-                        nextChoice = 2
-                    else:
-                        currentChoiceRunning = False
-                        output = pygame.font.SysFont("Arial", 30).render("You flip a coin and it lands on tails. You prepare to fight the spider.", True, (255, 255, 255))
-                        screen.blit(output, (50, 450))
-                        pygame.display.flip()
-                        time.sleep(1)
-                        nextChoice = 1
-        screen.blit(output, (50, 450))
-        pygame.display.flip()
-    if nextChoice == 1 and lives > 0:
-        currentChoiceRunning = True
-        output = pygame.font.SysFont("Arial", 30).render("You can either attack the head, back, or flip a coin.", True, (255, 255, 255))
-        while currentChoiceRunning:
-            title = pygame.font.SysFont("Arial", 30).render("You see a sleeping spider. What do you do?", True, (255, 255, 255))
-            sleeping_spider_image = pygame.image.load(resource_path("sleeping_spider.png"))
-            sleeping_spider_image = pygame.transform.scale(sleeping_spider_image, (400, 300))
-            button1_color = (85, 32, 48)
-            button2_color = (85, 32, 48)
-            button3_color = (85, 32, 48)
-            button1_text = pygame.font.SysFont("Arial", 30).render("Attack The Head", True, (255, 255, 255))
-            button2_text = pygame.font.SysFont("Arial", 30).render("Attack The Back", True, (255, 255, 255))
-            button3_text = pygame.font.SysFont("Arial", 30).render("Flip A Coin", True, (255, 255, 255))
-            screen.fill((22, 16, 32))
-            for i in range(lives):
-                screen.blit(heart, (950 - (10 + i * 40), 10))
-            pygame.draw.rect(screen, button1_color, button1)
-            pygame.draw.rect(screen, button2_color, button2)
-            pygame.draw.rect(screen, button3_color, button3)
-            screen.blit(button1_text, (button1.x + 10, button1.y + 10))
-            screen.blit(button2_text, (button2.x + 10, button2.y + 10))
-            screen.blit(button3_text, (button3.x + 10, button3.y + 10))
-            screen.blit(title, (50, 20))
-            screen.blit(sleeping_spider_image, (100, 100))
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    currentChoiceRunning = False
-                    running = False
-                    pygame.quit()
-                    raise SystemExit
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    mouse_pos = event.pos
-                    if button1.collidepoint(mouse_pos):
-                        currentChoiceRunning = False
-                        output = pygame.font.SysFont("Arial", 30).render("You Attack The Head. The Spider Dies.", True, (255, 255, 255))
-                        screen.blit(output, (50, 450))
-                        pygame.display.flip()
-                        time.sleep(1)
-                        nextChoice = 1
-                    elif button2.collidepoint(mouse_pos):
-                        currentChoiceRunning = False
-                        output = pygame.font.SysFont("Arial", 30).render("You Attack The Back. The Spider wakes up. You lose a life.", True, (255, 255, 255))
-                        lives -= 1
-                        screen.blit(output, (50, 450))
-                        pygame.display.flip()
-                        time.sleep(1)
-                    elif button3.collidepoint(mouse_pos):
-                        decision = random.randint(1, 2)
-                        if decision == 1:
-                            currentChoiceRunning = False
-                            output = pygame.font.SysFont("Arial", 30).render("You flip a coin and it lands on heads. You attack the head. The Spider Dies.", True, (255, 255, 255))
-                            screen.blit(output, (50, 450))
-                            pygame.display.flip()
-                            time.sleep(1)
-                            nextChoice = 2
-                        else:
-                            currentChoiceRunning = False
-                            output = pygame.font.SysFont("Arial", 30).render("You flip a coin and it lands on tails. You attack the back. The Spider wakes up. You lose a life.", True, (255, 255, 255))
-                            lives -= 1
-                            screen.blit(output, (50, 450))
-                            pygame.display.flip()
-                            time.sleep(1)
-            screen.blit(output, (50, 450))
-            pygame.display.flip()
-user_name = "Player"
-if lives > 0:
-    currentChoiceRunning = True
-    output = pygame.font.SysFont("Arial", 30).render("Tell The Ghost Your Name", True, (255, 255, 255))
-    ghost_image_in_house = pygame.image.load(resource_path("ghost_in_house.png"))
-    ghost_image_in_house = pygame.transform.scale(ghost_image_in_house, (400, 300))
-    name_box = TextBox(50, 500, 300, 40, "Enter your name...")
-    while currentChoiceRunning:
-        screen.fill((22, 16, 32))
-        title = pygame.font.SysFont("Arial", 30).render("You see a Ghost. It asks your name.", True, (255, 255, 255))
-        submit_button = pygame.Rect(370, 500, 100, 40)
-        submit_button_color = (85, 32, 48)
-        submit_button_text = pygame.font.SysFont("Arial", 30).render("Submit", True, (255, 255, 255))
-        pygame.draw.rect(screen, submit_button_color, submit_button)
-        screen.blit(submit_button_text, (submit_button.x + 10, submit_button.y + 5))
-        name_box.draw(screen)
-        for i in range(lives):
-            screen.blit(heart, (950 - (10 + i * 40), 10))
-        screen.blit(title, (50, 20))
-        screen.blit(ghost_image_in_house, (100, 100))
-        screen.blit(output, (50, 450))
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                currentChoiceRunning = False
-                running = False
-                pygame.quit()
-                raise SystemExit
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                mouse_pos = event.pos
-                if submit_button.collidepoint(mouse_pos):
-                    entered_name = name_box.get()
-                    if entered_name:
-                        user_name = entered_name
-                        currentChoiceRunning = False
-                        output = pygame.font.SysFont("Arial", 30).render(f"You tell the ghost your name is {user_name}.", True, (255, 255, 255))
-                        screen.blit(output, (50, 450))
-                        pygame.display.flip()
-                        time.sleep(1)
-            name_box.handle_event(event)
-        pygame.display.flip()
-if lives > 0:
-    currentChoiceRunning = True
-    output = pygame.font.SysFont("Arial", 30).render("Make your choice.", True, (255, 255, 255))
-    while currentChoiceRunning:
-        title = pygame.font.SysFont("Arial", 30).render(f"\"Would You Like To Play A Game {user_name}?\" The Ghost Asks.", True, (255, 255, 255))
-        house_image = pygame.image.load(resource_path("house.png"))
-        house_image = pygame.transform.scale(house_image, (800, 300))
-        button1_color = (85, 32, 48)
-        button2_color = (85, 32, 48)
-        button3_color = (85, 32, 48)
-        button1_text = pygame.font.SysFont("Arial", 30).render("Play", True, (255, 255, 255))
-        button2_text = pygame.font.SysFont("Arial", 30).render("Don't Play", True, (255, 255, 255))
-        button3_text = pygame.font.SysFont("Arial", 30).render("Do Nothing", True, (255, 255, 255))
-        screen.fill((22, 16, 32))
-        for i in range(lives):
-            screen.blit(heart, (950 - (10 + i * 40), 10))
-        pygame.draw.rect(screen, button1_color, button1)
-        pygame.draw.rect(screen, button2_color, button2)
-        pygame.draw.rect(screen, button3_color, button3)
-        screen.blit(button1_text, (button1.x + 10, button1.y + 10))
-        screen.blit(button2_text, (button2.x + 10, button2.y + 10))
-        screen.blit(button3_text, (button3.x + 10, button3.y + 10))
-        screen.blit(title, (50, 20))
-        screen.blit(house_image, (100, 100))
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                currentChoiceRunning = False
-                running = False
-                pygame.quit()
-                raise SystemExit
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                mouse_pos = event.pos
-                if button1.collidepoint(mouse_pos):
-                    currentChoiceRunning = False
-                    output = pygame.font.SysFont("Arial", 30).render("You play the game.", True, (255, 255, 255))
-                    screen.blit(output, (50, 450))
-                    pygame.display.flip()
-                    time.sleep(1)
-                    nextChoice = 1
-                elif button2.collidepoint(mouse_pos):
-                    currentChoiceRunning = False
-                    output = pygame.font.SysFont("Arial", 30).render("You don't play.", True, (255, 255, 255))
-                    screen.blit(output, (50, 450))
-                    pygame.display.flip()
-                    time.sleep(1)
-                    nextChoice = 2
-                elif button3.collidepoint(mouse_pos):
-                    output = pygame.font.SysFont("Arial", 30).render("You can't stay here forever.", True, (255, 255, 255))
-                    screen.blit(output, (50, 450))
-                    pygame.display.flip()
-                    time.sleep(0.2)
-        screen.blit(output, (50, 450))
-        pygame.display.flip()
-if nextChoice == 1 and lives > 0:
-    for i in range(10):
-        if lives <= 0:
-            break
-        currentChoiceRunning = True
-        correct_potion = random.randint(1, 2)
-        output = pygame.font.SysFont("Arial", 30).render("Choose 1 or 2", True, (255, 255, 255))
-        while currentChoiceRunning:
-            title = pygame.font.SysFont("Arial", 30).render("Pick A Potion", True, (255, 255, 255))
-            potion_1 = pygame.image.load(resource_path("awkward_potion.png"))
-            potion_1 = pygame.transform.scale(potion_1, (100, 100))
-            potion_2 = potion_1.copy()
-            button1_color = (85, 32, 48)
-            button2_color = (85, 32, 48)
-            button3_color = (85, 32, 48)
-            button1_text = pygame.font.SysFont("Arial", 30).render("Potion 1", True, (255, 255, 255))
-            button2_text = pygame.font.SysFont("Arial", 30).render("Potion 2", True, (255, 255, 255))
-            button3_text = pygame.font.SysFont("Arial", 30).render("Sit Around", True, (255, 255, 255))
-            screen.fill((22, 16, 32))
-            for h in range(min(lives, 5)):
-                screen.blit(heart, (950 - (h + 1) * 30, 10))
-            for h in range(max(0, lives - 5)):
-                screen.blit(golden_heart, (950 - (h + 1) * 30, 40))
-            pygame.draw.rect(screen, button1_color, button1)
-            pygame.draw.rect(screen, button2_color, button2)
-            pygame.draw.rect(screen, button3_color, button3)
-            screen.blit(potion_1, (button1.centerx - 50, button1.y - 180))
-            screen.blit(potion_2, (button2.centerx - 50, button2.y - 180))
-            screen.blit(button1_text, (button1.x + 10, button1.y + 10))
-            screen.blit(button2_text, (button2.x + 10, button2.y + 10))
-            screen.blit(button3_text, (button3.x + 10, button3.y + 10))
-            screen.blit(title, (50, 20))
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    currentChoiceRunning = False
-                    running = False
-                    pygame.quit()
-                    raise SystemExit
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    mouse_pos = event.pos
-                    if button1.collidepoint(mouse_pos):
-                        currentChoiceRunning = False
-                        if correct_potion == 1:
-                            potion_1.fill((80, 255, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
-                            potion_2.fill((255, 70, 70, 255), special_flags=pygame.BLEND_RGBA_MULT)
-                            output = pygame.font.SysFont("Arial", 30).render("You chose the healing potion.", True, (255, 255, 255))
-                            lives += 1
-                        else:
-                            potion_1.fill((255, 70, 70, 255), special_flags=pygame.BLEND_RGBA_MULT)
-                            potion_2.fill((80, 255, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
-                            output = pygame.font.SysFont("Arial", 30).render("You chose the harming potion.", True, (255, 255, 255))
-                            lives -= 1
-                        screen.blit(potion_1, (button1.centerx - 50, button1.y - 180))
-                        screen.blit(potion_2, (button2.centerx - 50, button2.y - 180))
-                        screen.blit(output, (50, 450))
-                        pygame.display.flip()
-                        time.sleep(1)
-                    elif button2.collidepoint(mouse_pos):
-                        currentChoiceRunning = False
-                        if correct_potion == 1:
-                            potion_1.fill((80, 255, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
-                            potion_2.fill((255, 70, 70, 255), special_flags=pygame.BLEND_RGBA_MULT)
-                            output = pygame.font.SysFont("Arial", 30).render("You chose the harming potion.", True, (255, 255, 255))
-                            lives -= 1
-                        else:
-                            potion_1.fill((255, 70, 70, 255), special_flags=pygame.BLEND_RGBA_MULT)
-                            potion_2.fill((80, 255, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
-                            output = pygame.font.SysFont("Arial", 30).render("You chose the healing potion.", True, (255, 255, 255))
-                            lives += 1
-                        screen.blit(potion_1, (button1.centerx - 50, button1.y - 180))
-                        screen.blit(potion_2, (button2.centerx - 50, button2.y - 180))
-                        screen.blit(output, (50, 450))
-                        pygame.display.flip()
-                        time.sleep(1)
-                    elif button3.collidepoint(mouse_pos):
-                        output = pygame.font.SysFont("Arial", 30).render("Now Pick A Potion", True, (255, 255, 255))
-                        screen.blit(output, (50, 450))
-                        pygame.display.flip()
-                        time.sleep(0.2)
-            screen.blit(output, (50, 450))
-            pygame.display.flip()
 def riddle(question, correct_answer, wrong_answer, image_filename):
     global lives
     global running
@@ -578,38 +219,389 @@ riddles = [
     ("What has a lid but no box?", "An eye", "A suitcase"),
     ("What has a beginning but no end, and an end but no beginning?", "A circle", "A line")
 ]
-if lives > 0:
-    selected_riddles = random.sample(riddles, min(10, len(riddles)))
-    for question, correct_answer, wrong_answer in selected_riddles:
-        if lives <= 0:
-            break
-        riddle(question, correct_answer, wrong_answer, random.choice(["room_1.png", "room_2.png", "room_3.png"]))
-if lives <= 0:
-    game_over_running = True
-    while game_over_running:
+while running:
+    lives = 5
+    nextChoice = ""
+    currentChoiceRunning = True
+    output = pygame.font.SysFont("Arial", 30).render("You can either enter the house, sneak in from the back, or run away from it.", True, (255, 255, 255))
+    while currentChoiceRunning:
+        title = pygame.font.SysFont("Arial", 30).render("You see a haunted house in the distance. What do you do?", True, (255, 255, 255))
+        house_image = pygame.image.load(resource_path("house.png"))
+        house_image = pygame.transform.scale(house_image, (800, 300))
+        button1_color = (85, 32, 48)
+        button2_color = (85, 32, 48)
+        button3_color = (85, 32, 48)
+        button1_text = pygame.font.SysFont("Arial", 30).render("Enter House", True, (255, 255, 255))
+        button2_text = pygame.font.SysFont("Arial", 30).render("Sneak In From Back", True, (255, 255, 255))
+        button3_text = pygame.font.SysFont("Arial", 30).render("RUN AWAY FROM IT", True, (255, 255, 255))
         screen.fill((22, 16, 32))
-        title = pygame.font.SysFont("Arial", 30).render("Game Over", True, (255, 255, 255))
+        for i in range(lives):
+            screen.blit(heart, (950 - (10 + i * 40), 10))
+        pygame.draw.rect(screen, button1_color, button1)
+        pygame.draw.rect(screen, button2_color, button2)
+        pygame.draw.rect(screen, button3_color, button3)
+        screen.blit(button1_text, (button1.x + 10, button1.y + 10))
+        screen.blit(button2_text, (button2.x + 10, button2.y + 10))
+        screen.blit(button3_text, (button3.x + 10, button3.y + 10))
         screen.blit(title, (50, 20))
+        screen.blit(house_image, (100, 100))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                game_over_running = False
+                currentChoiceRunning = False
                 running = False
                 pygame.quit()
                 raise SystemExit
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                mouse_pos = event.pos
+                if button1.collidepoint(mouse_pos):
+                    currentChoiceRunning = False
+                    output = pygame.font.SysFont("Arial", 30).render("You enter the gate.", True, (255, 255, 255))
+                    screen.blit(output, (50, 450))
+                    pygame.display.flip()
+                    time.sleep(1)
+                    nextChoice = 1
+                elif button2.collidepoint(mouse_pos):
+                    currentChoiceRunning = False
+                    output = pygame.font.SysFont("Arial", 30).render("You sneak In.", True, (255, 255, 255))
+                    screen.blit(output, (50, 450))
+                    pygame.display.flip()
+                    time.sleep(1)
+                    nextChoice = 2
+                elif button3.collidepoint(mouse_pos):
+                    output = pygame.font.SysFont("Arial", 30).render("Well... Nope", True, (255, 255, 255))
+                    screen.blit(output, (50, 450))
+                    pygame.display.flip()
+                    time.sleep(0.2)
+        screen.blit(output, (50, 450))
         pygame.display.flip()
-elif lives > 0:
-    victory_running = True
-    while victory_running:
+    if nextChoice == 2 and lives > 0:
+        currentChoiceRunning = True
+        output = pygame.font.SysFont("Arial", 30).render("You can either attack spider, leave peacefully, or flip a coin.", True, (255, 255, 255))
+        while currentChoiceRunning:
+            title = pygame.font.SysFont("Arial", 30).render("You see a sleeping spider. What do you do?", True, (255, 255, 255))
+            sleeping_spider_image = pygame.image.load(resource_path("sleeping_spider.png"))
+            sleeping_spider_image = pygame.transform.scale(sleeping_spider_image, (400, 300))
+            button1_color = (85, 32, 48)
+            button2_color = (85, 32, 48)
+            button3_color = (85, 32, 48)
+            button1_text = pygame.font.SysFont("Arial", 30).render("Attack Spider", True, (255, 255, 255))
+            button2_text = pygame.font.SysFont("Arial", 30).render("Leave Peacefully", True, (255, 255, 255))
+            button3_text = pygame.font.SysFont("Arial", 30).render("Flip A Coin", True, (255, 255, 255))
+            screen.fill((22, 16, 32))
+            for i in range(lives):
+                screen.blit(heart, (950 - (10 + i * 40), 10))
+            pygame.draw.rect(screen, button1_color, button1)
+            pygame.draw.rect(screen, button2_color, button2)
+            pygame.draw.rect(screen, button3_color, button3)
+            screen.blit(button1_text, (button1.x + 10, button1.y + 10))
+            screen.blit(button2_text, (button2.x + 10, button2.y + 10))
+            screen.blit(button3_text, (button3.x + 10, button3.y + 10))
+            screen.blit(title, (50, 20))
+            screen.blit(sleeping_spider_image, (100, 100))
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    currentChoiceRunning = False
+                    running = False
+                    pygame.quit()
+                    raise SystemExit
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    mouse_pos = event.pos
+                    if button1.collidepoint(mouse_pos):
+                        currentChoiceRunning = False
+                        output = pygame.font.SysFont("Arial", 30).render("You prepare to fight the spider.", True, (255, 255, 255))
+                        screen.blit(output, (50, 450))
+                        pygame.display.flip()
+                        time.sleep(1)
+                        nextChoice = 1
+                    elif button2.collidepoint(mouse_pos):
+                        currentChoiceRunning = False
+                        output = pygame.font.SysFont("Arial", 30).render("You leave peacefully.", True, (255, 255, 255))
+                        screen.blit(output, (50, 450))
+                        pygame.display.flip()
+                        time.sleep(1)
+                        nextChoice = 2
+                    elif button3.collidepoint(mouse_pos):
+                        decision = random.randint(1, 2)
+                        if decision == 1:
+                            currentChoiceRunning = False
+                            output = pygame.font.SysFont("Arial", 30).render("You flip a coin and it lands on heads. You leave peacefully.", True, (255, 255, 255))
+                            screen.blit(output, (50, 450))
+                            pygame.display.flip()
+                            time.sleep(1)
+                            nextChoice = 2
+                        else:
+                            currentChoiceRunning = False
+                            output = pygame.font.SysFont("Arial", 30).render("You flip a coin and it lands on tails. You prepare to fight the spider.", True, (255, 255, 255))
+                            screen.blit(output, (50, 450))
+                            pygame.display.flip()
+                            time.sleep(1)
+                            nextChoice = 1
+            screen.blit(output, (50, 450))
+            pygame.display.flip()
+        if nextChoice == 1 and lives > 0:
+            currentChoiceRunning = True
+            output = pygame.font.SysFont("Arial", 30).render("You can either attack the head, back, or flip a coin.", True, (255, 255, 255))
+            while currentChoiceRunning:
+                title = pygame.font.SysFont("Arial", 30).render("You see a sleeping spider. What do you do?", True, (255, 255, 255))
+                sleeping_spider_image = pygame.image.load(resource_path("sleeping_spider.png"))
+                sleeping_spider_image = pygame.transform.scale(sleeping_spider_image, (400, 300))
+                button1_color = (85, 32, 48)
+                button2_color = (85, 32, 48)
+                button3_color = (85, 32, 48)
+                button1_text = pygame.font.SysFont("Arial", 30).render("Attack The Head", True, (255, 255, 255))
+                button2_text = pygame.font.SysFont("Arial", 30).render("Attack The Back", True, (255, 255, 255))
+                button3_text = pygame.font.SysFont("Arial", 30).render("Flip A Coin", True, (255, 255, 255))
+                screen.fill((22, 16, 32))
+                for i in range(lives):
+                    screen.blit(heart, (950 - (10 + i * 40), 10))
+                pygame.draw.rect(screen, button1_color, button1)
+                pygame.draw.rect(screen, button2_color, button2)
+                pygame.draw.rect(screen, button3_color, button3)
+                screen.blit(button1_text, (button1.x + 10, button1.y + 10))
+                screen.blit(button2_text, (button2.x + 10, button2.y + 10))
+                screen.blit(button3_text, (button3.x + 10, button3.y + 10))
+                screen.blit(title, (50, 20))
+                screen.blit(sleeping_spider_image, (100, 100))
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        currentChoiceRunning = False
+                        running = False
+                        pygame.quit()
+                        raise SystemExit
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        mouse_pos = event.pos
+                        if button1.collidepoint(mouse_pos):
+                            currentChoiceRunning = False
+                            output = pygame.font.SysFont("Arial", 30).render("You Attack The Head. The Spider Dies.", True, (255, 255, 255))
+                            screen.blit(output, (50, 450))
+                            pygame.display.flip()
+                            time.sleep(1)
+                            nextChoice = 1
+                        elif button2.collidepoint(mouse_pos):
+                            currentChoiceRunning = False
+                            output = pygame.font.SysFont("Arial", 30).render("You Attack The Back. The Spider wakes up. You lose a life.", True, (255, 255, 255))
+                            lives -= 1
+                            screen.blit(output, (50, 450))
+                            pygame.display.flip()
+                            time.sleep(1)
+                        elif button3.collidepoint(mouse_pos):
+                            decision = random.randint(1, 2)
+                            if decision == 1:
+                                currentChoiceRunning = False
+                                output = pygame.font.SysFont("Arial", 30).render("You flip a coin and it lands on heads. You attack the head. The Spider Dies.", True, (255, 255, 255))
+                                screen.blit(output, (50, 450))
+                                pygame.display.flip()
+                                time.sleep(1)
+                                nextChoice = 2
+                            else:
+                                currentChoiceRunning = False
+                                output = pygame.font.SysFont("Arial", 30).render("You flip a coin and it lands on tails. You attack the back. The Spider wakes up. You lose a life.", True, (255, 255, 255))
+                                lives -= 1
+                                screen.blit(output, (50, 450))
+                                pygame.display.flip()
+                                time.sleep(1)
+                screen.blit(output, (50, 450))
+                pygame.display.flip()
+    user_name = "Player"
+    if lives > 0:
+        currentChoiceRunning = True
+        output = pygame.font.SysFont("Arial", 30).render("Tell The Ghost Your Name", True, (255, 255, 255))
+        ghost_image_in_house = pygame.image.load(resource_path("ghost_in_house.png"))
+        ghost_image_in_house = pygame.transform.scale(ghost_image_in_house, (400, 300))
+        name_box = TextBox(50, 500, 300, 40, "Enter your name...")
+        while currentChoiceRunning:
+            screen.fill((22, 16, 32))
+            title = pygame.font.SysFont("Arial", 30).render("You see a Ghost. It asks your name.", True, (255, 255, 255))
+            submit_button = pygame.Rect(370, 500, 100, 40)
+            submit_button_color = (85, 32, 48)
+            submit_button_text = pygame.font.SysFont("Arial", 30).render("Submit", True, (255, 255, 255))
+            pygame.draw.rect(screen, submit_button_color, submit_button)
+            screen.blit(submit_button_text, (submit_button.x + 10, submit_button.y + 5))
+            name_box.draw(screen)
+            for i in range(lives):
+                screen.blit(heart, (950 - (10 + i * 40), 10))
+            screen.blit(title, (50, 20))
+            screen.blit(ghost_image_in_house, (100, 100))
+            screen.blit(output, (50, 450))
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    currentChoiceRunning = False
+                    running = False
+                    pygame.quit()
+                    raise SystemExit
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    mouse_pos = event.pos
+                    if submit_button.collidepoint(mouse_pos):
+                        entered_name = name_box.get()
+                        if entered_name:
+                            user_name = entered_name
+                            currentChoiceRunning = False
+                            output = pygame.font.SysFont("Arial", 30).render(f"You tell the ghost your name is {user_name}.", True, (255, 255, 255))
+                            screen.blit(output, (50, 450))
+                            pygame.display.flip()
+                            time.sleep(1)
+                name_box.handle_event(event)
+            pygame.display.flip()
+    if lives > 0:
+        currentChoiceRunning = True
+        output = pygame.font.SysFont("Arial", 30).render("Make your choice.", True, (255, 255, 255))
+        while currentChoiceRunning:
+            title = pygame.font.SysFont("Arial", 30).render(f"\"Would You Like To Play A Game {user_name}?\" The Ghost Asks.", True, (255, 255, 255))
+            house_image = pygame.image.load(resource_path("house.png"))
+            house_image = pygame.transform.scale(house_image, (800, 300))
+            button1_color = (85, 32, 48)
+            button2_color = (85, 32, 48)
+            button3_color = (85, 32, 48)
+            button1_text = pygame.font.SysFont("Arial", 30).render("Play", True, (255, 255, 255))
+            button2_text = pygame.font.SysFont("Arial", 30).render("Don't Play", True, (255, 255, 255))
+            button3_text = pygame.font.SysFont("Arial", 30).render("Do Nothing", True, (255, 255, 255))
+            screen.fill((22, 16, 32))
+            for i in range(lives):
+                screen.blit(heart, (950 - (10 + i * 40), 10))
+            pygame.draw.rect(screen, button1_color, button1)
+            pygame.draw.rect(screen, button2_color, button2)
+            pygame.draw.rect(screen, button3_color, button3)
+            screen.blit(button1_text, (button1.x + 10, button1.y + 10))
+            screen.blit(button2_text, (button2.x + 10, button2.y + 10))
+            screen.blit(button3_text, (button3.x + 10, button3.y + 10))
+            screen.blit(title, (50, 20))
+            screen.blit(house_image, (100, 100))
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    currentChoiceRunning = False
+                    running = False
+                    pygame.quit()
+                    raise SystemExit
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    mouse_pos = event.pos
+                    if button1.collidepoint(mouse_pos):
+                        currentChoiceRunning = False
+                        output = pygame.font.SysFont("Arial", 30).render("You play the game.", True, (255, 255, 255))
+                        screen.blit(output, (50, 450))
+                        pygame.display.flip()
+                        time.sleep(1)
+                        nextChoice = 1
+                    elif button2.collidepoint(mouse_pos):
+                        currentChoiceRunning = False
+                        output = pygame.font.SysFont("Arial", 30).render("You don't play.", True, (255, 255, 255))
+                        screen.blit(output, (50, 450))
+                        pygame.display.flip()
+                        time.sleep(1)
+                        nextChoice = 2
+                    elif button3.collidepoint(mouse_pos):
+                        output = pygame.font.SysFont("Arial", 30).render("You can't stay here forever.", True, (255, 255, 255))
+                        screen.blit(output, (50, 450))
+                        pygame.display.flip()
+                        time.sleep(0.2)
+            screen.blit(output, (50, 450))
+            pygame.display.flip()
+    if nextChoice == 1 and lives > 0:
+        for i in range(10):
+            if lives <= 0:
+                break
+            currentChoiceRunning = True
+            correct_potion = random.randint(1, 2)
+            output = pygame.font.SysFont("Arial", 30).render("Choose 1 or 2", True, (255, 255, 255))
+            while currentChoiceRunning:
+                title = pygame.font.SysFont("Arial", 30).render("Pick A Potion", True, (255, 255, 255))
+                potion_1 = pygame.image.load(resource_path("awkward_potion.png"))
+                potion_1 = pygame.transform.scale(potion_1, (100, 100))
+                potion_2 = potion_1.copy()
+                button1_color = (85, 32, 48)
+                button2_color = (85, 32, 48)
+                button3_color = (85, 32, 48)
+                button1_text = pygame.font.SysFont("Arial", 30).render("Potion 1", True, (255, 255, 255))
+                button2_text = pygame.font.SysFont("Arial", 30).render("Potion 2", True, (255, 255, 255))
+                button3_text = pygame.font.SysFont("Arial", 30).render("Sit Around", True, (255, 255, 255))
+                screen.fill((22, 16, 32))
+                for h in range(min(lives, 5)):
+                    screen.blit(heart, (950 - (h + 1) * 30, 10))
+                for h in range(max(0, lives - 5)):
+                    screen.blit(golden_heart, (950 - (h + 1) * 30, 40))
+                pygame.draw.rect(screen, button1_color, button1)
+                pygame.draw.rect(screen, button2_color, button2)
+                pygame.draw.rect(screen, button3_color, button3)
+                screen.blit(potion_1, (button1.centerx - 50, button1.y - 180))
+                screen.blit(potion_2, (button2.centerx - 50, button2.y - 180))
+                screen.blit(button1_text, (button1.x + 10, button1.y + 10))
+                screen.blit(button2_text, (button2.x + 10, button2.y + 10))
+                screen.blit(button3_text, (button3.x + 10, button3.y + 10))
+                screen.blit(title, (50, 20))
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        currentChoiceRunning = False
+                        running = False
+                        pygame.quit()
+                        raise SystemExit
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                        mouse_pos = event.pos
+                        if button1.collidepoint(mouse_pos):
+                            currentChoiceRunning = False
+                            if correct_potion == 1:
+                                potion_1.fill((80, 255, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
+                                potion_2.fill((255, 70, 70, 255), special_flags=pygame.BLEND_RGBA_MULT)
+                                output = pygame.font.SysFont("Arial", 30).render("You chose the healing potion.", True, (255, 255, 255))
+                                lives += 1
+                            else:
+                                potion_1.fill((255, 70, 70, 255), special_flags=pygame.BLEND_RGBA_MULT)
+                                potion_2.fill((80, 255, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
+                                output = pygame.font.SysFont("Arial", 30).render("You chose the harming potion.", True, (255, 255, 255))
+                                lives -= 1
+                            screen.blit(potion_1, (button1.centerx - 50, button1.y - 180))
+                            screen.blit(potion_2, (button2.centerx - 50, button2.y - 180))
+                            screen.blit(output, (50, 450))
+                            pygame.display.flip()
+                            time.sleep(1)
+                        elif button2.collidepoint(mouse_pos):
+                            currentChoiceRunning = False
+                            if correct_potion == 1:
+                                potion_1.fill((80, 255, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
+                                potion_2.fill((255, 70, 70, 255), special_flags=pygame.BLEND_RGBA_MULT)
+                                output = pygame.font.SysFont("Arial", 30).render("You chose the harming potion.", True, (255, 255, 255))
+                                lives -= 1
+                            else:
+                                potion_1.fill((255, 70, 70, 255), special_flags=pygame.BLEND_RGBA_MULT)
+                                potion_2.fill((80, 255, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
+                                output = pygame.font.SysFont("Arial", 30).render("You chose the healing potion.", True, (255, 255, 255))
+                                lives += 1
+                            screen.blit(potion_1, (button1.centerx - 50, button1.y - 180))
+                            screen.blit(potion_2, (button2.centerx - 50, button2.y - 180))
+                            screen.blit(output, (50, 450))
+                            pygame.display.flip()
+                            time.sleep(1)
+                        elif button3.collidepoint(mouse_pos):
+                            output = pygame.font.SysFont("Arial", 30).render("Now Pick A Potion", True, (255, 255, 255))
+                            screen.blit(output, (50, 450))
+                            pygame.display.flip()
+                            time.sleep(0.2)
+                screen.blit(output, (50, 450))
+                pygame.display.flip()
+    if lives > 0:
+        selected_riddles = random.sample(riddles, min(10, len(riddles)))
+        for question, correct_answer, wrong_answer in selected_riddles:
+            if lives <= 0:
+                break
+            riddle(question, correct_answer, wrong_answer, random.choice(["room_1.png", "room_2.png", "room_3.png"]))
+    play_again_rect = pygame.Rect(360, 400, 280, 60)
+    end_screen_running = True
+    while end_screen_running:
         screen.fill((22, 16, 32))
-        title = pygame.font.SysFont("Arial", 30).render("You Win!", True, (255, 255, 255))
-        screen.blit(title, (50, 20))
+        if lives <= 0:
+            end_title = pygame.font.SysFont("Arial", 40).render("Game Over", True, (255, 50, 50))
+        else:
+            end_title = pygame.font.SysFont("Arial", 40).render("You Win!", True, (50, 255, 50))
+        screen.blit(end_title, (400, 200))
+        pygame.draw.rect(screen, (85, 32, 48), play_again_rect)
+        btn_text = pygame.font.SysFont("Arial", 30).render("Play Again", True, (255, 255, 255))
+        screen.blit(btn_text, (play_again_rect.x + 70, play_again_rect.y + 15))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                victory_running = False
+                end_screen_running = False
                 running = False
                 pygame.quit()
                 raise SystemExit
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                if play_again_rect.collidepoint(event.pos):
+                    end_screen_running = False
         pygame.display.flip()
 pygame.quit()
-
-
