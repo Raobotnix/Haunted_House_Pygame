@@ -3,6 +3,9 @@ import pygame
 import time
 import os
 import sys
+script_dir = os.path.dirname(os.path.abspath(__file__))
+print("Current directory:", os.getcwd())
+print("Files:", os.listdir())
 class TextBox:
     def __init__(self, x, y, width, height, placeholder="Type here...", max_length=100):
         self.rect = pygame.Rect(x, y, width, height)
@@ -31,14 +34,16 @@ class TextBox:
         screen.blit(surface, (self.rect.x + 8, self.rect.y + 8))
     def get(self):
         return self.text
+pygame.init()
+pygame.font.init()
 screen = pygame.display.set_mode((1000, 600))
-icon = pygame.image.load(resource_path("logo.png"))
+icon = pygame.image.load(f"{script_dir}\logo.png")
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Haunted House")
 running = True
-heart = pygame.image.load(resource_path("heart.png"))
+heart = pygame.image.load(f"{script_dir}\heart.png")
 heart = pygame.transform.scale(heart, (30, 30))
-golden_heart = pygame.image.load(resource_path("golden_heart.png"))
+golden_heart = pygame.image.load(f"{script_dir}\golden_heart.png")
 golden_heart = pygame.transform.scale(golden_heart, (30, 30))
 button1 = pygame.Rect(40, 520, 280, 60)
 button2 = pygame.Rect(360, 520, 280, 60)
@@ -59,7 +64,7 @@ def riddle(question, correct_answer, wrong_answer, image_filename):
     output = pygame.font.SysFont("Arial", 30).render("Pick Answer", True, (255, 255, 255))
     answers = [(correct_answer, True), (wrong_answer, False)]
     random.shuffle(answers)
-    image = pygame.image.load(resource_path(image_filename))
+    image = pygame.image.load(f"{script_dir}\{image_filename}")
     image = pygame.transform.scale(image, (800, 300))
     while currentChoiceRunning:
         title = pygame.font.SysFont("Arial", 30).render(question, True, (255, 255, 255))
@@ -226,7 +231,7 @@ while running:
     output = pygame.font.SysFont("Arial", 30).render("You can either enter the house, sneak in from the back, or run away from it.", True, (255, 255, 255))
     while currentChoiceRunning:
         title = pygame.font.SysFont("Arial", 30).render("You see a haunted house in the distance. What do you do?", True, (255, 255, 255))
-        house_image = pygame.image.load(resource_path("house.png"))
+        house_image = pygame.image.load(f"{script_dir}\house.png")
         house_image = pygame.transform.scale(house_image, (800, 300))
         button1_color = (85, 32, 48)
         button2_color = (85, 32, 48)
@@ -279,7 +284,7 @@ while running:
         output = pygame.font.SysFont("Arial", 30).render("You can either attack spider, leave peacefully, or flip a coin.", True, (255, 255, 255))
         while currentChoiceRunning:
             title = pygame.font.SysFont("Arial", 30).render("You see a sleeping spider. What do you do?", True, (255, 255, 255))
-            sleeping_spider_image = pygame.image.load(resource_path("sleeping_spider.png"))
+            sleeping_spider_image = pygame.image.load(f"{script_dir}\sleeping_spider.png")
             sleeping_spider_image = pygame.transform.scale(sleeping_spider_image, (400, 300))
             button1_color = (85, 32, 48)
             button2_color = (85, 32, 48)
@@ -343,7 +348,7 @@ while running:
             output = pygame.font.SysFont("Arial", 30).render("You can either attack the head, back, or flip a coin.", True, (255, 255, 255))
             while currentChoiceRunning:
                 title = pygame.font.SysFont("Arial", 30).render("You see a sleeping spider. What do you do?", True, (255, 255, 255))
-                sleeping_spider_image = pygame.image.load(resource_path("sleeping_spider.png"))
+                sleeping_spider_image = pygame.image.load(f"{script_dir}\sleeping_spider.png")
                 sleeping_spider_image = pygame.transform.scale(sleeping_spider_image, (400, 300))
                 button1_color = (85, 32, 48)
                 button2_color = (85, 32, 48)
@@ -406,7 +411,7 @@ while running:
     if lives > 0:
         currentChoiceRunning = True
         output = pygame.font.SysFont("Arial", 30).render("Tell The Ghost Your Name", True, (255, 255, 255))
-        ghost_image_in_house = pygame.image.load(resource_path("ghost_in_house.png"))
+        ghost_image_in_house = pygame.image.load(f"{script_dir}\ghost_in_house.png")
         ghost_image_in_house = pygame.transform.scale(ghost_image_in_house, (400, 300))
         name_box = TextBox(50, 500, 300, 40, "Enter your name...")
         while currentChoiceRunning:
@@ -447,7 +452,7 @@ while running:
         output = pygame.font.SysFont("Arial", 30).render("Make your choice.", True, (255, 255, 255))
         while currentChoiceRunning:
             title = pygame.font.SysFont("Arial", 30).render(f"\"Would You Like To Play A Game {user_name}?\" The Ghost Asks.", True, (255, 255, 255))
-            house_image = pygame.image.load(resource_path("house.png"))
+            house_image = pygame.image.load(f"{script_dir}\house.png")
             house_image = pygame.transform.scale(house_image, (800, 300))
             button1_color = (85, 32, 48)
             button2_color = (85, 32, 48)
@@ -504,7 +509,7 @@ while running:
             output = pygame.font.SysFont("Arial", 30).render("Choose 1 or 2", True, (255, 255, 255))
             while currentChoiceRunning:
                 title = pygame.font.SysFont("Arial", 30).render("Pick A Potion", True, (255, 255, 255))
-                potion_1 = pygame.image.load(resource_path("awkward_potion.png"))
+                potion_1 = pygame.image.load(f"{script_dir}\awkward_potion.png")
                 potion_1 = pygame.transform.scale(potion_1, (100, 100))
                 potion_2 = potion_1.copy()
                 button1_color = (85, 32, 48)
